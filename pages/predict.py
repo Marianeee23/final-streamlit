@@ -1,10 +1,8 @@
 import streamlit as st
 import pickle
 
-# Load the trained NaiveBayesClassifier from the saved file
-filename = 'pages\imdb.sav'
-with open(filename, 'rb') as file:
-    loaded_model = pickle.load(file)
+file = 'pages/imdb.sav'
+loaded_model = pickle.load(open(file, 'rb'))
 
 st.title("🎥 IMDb Movie Predictor 🎥")
 st.subheader("Enter movie details to predict its IMDb rating:")
