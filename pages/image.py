@@ -14,7 +14,7 @@ st.set_page_config(layout="wide", page_title="👟Shoes Brand Classification Mod
 # Function to load the model
 def load_model():
     try:
-        model = joblib.load('pages/butterflyandmoth.p')
+        model = joblib.load('pages/shoes.p')
         return model
     except FileNotFoundError:
         st.error("Model file not found. Please upload the model file.")
