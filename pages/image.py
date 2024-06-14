@@ -1,42 +1,18 @@
 
-import joblib
-import streamlit as st
-import pandas as pd
-from nltk.corpus import names
+import pickle
 from PIL import Image
 from io import BytesIO
 from img2vec_pytorch import Img2Vec
-from sklearn.exceptions import NotFittedError
-from sklearn.utils.validation import check_is_fitted
+import streamlit as st
 
+#NOTE don't forget to upload the picke (model) file to your Google Colab First
+#to run this code
+#you can use any model that is capable of classifiying images that uses img2vec_pytorch
+with open('pages/shoes.p', 'rb') as f:
+    model = pickle.load(f)
 
-st.set_page_config(layout="wide", page_title="Image Classification for Shoes Brand")
-
-# Function to load the model
-def load_model():
-    try:
-        model = joblib.load('pages/shoes.p')
-        return model
-    except FileNotFoundError:
-        st.error("Model file not found. Please upload the model file.")
-        return None
-    except Exception as e:
-        st.error(f"Error loading the model: {e}")
-        return None
-
-# Function to check if the model is fitted
-def is_model_fitted(model):
-    try:
-        check_is_fitted(model)
-        return True
-    except NotFittedError:
-        return False
-
-# Load the model
-model = load_model()
-
-# Initialize Img2Vec
 img2vec = Img2Vec()
+
 
 # Streamlit Web App Interface
 st.write("##  👟Shoes Brand Classification Model 👟")
