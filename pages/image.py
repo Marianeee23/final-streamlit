@@ -1,7 +1,5 @@
 import joblib
 import streamlit as st
-import pandas as pd
-from nltk.corpus import names
 from PIL import Image
 from io import BytesIO
 from img2vec_pytorch import Img2Vec
@@ -38,9 +36,9 @@ model = load_model()
 img2vec = Img2Vec()
 
 # Streamlit Web App Interface
-st.write("##  👟Shoes Brand Classification Model 👟")
+st.write("## 👟 Shoes Brand Classification Model 👟")
 st.write("Upload an image of shoes, and we'll predict its brand based on our trained model!")
-st.write("Prediction is limited to the brand of  Adidas and Nike")
+st.write("Prediction is limited to the brands Adidas and Nike.")
 st.sidebar.write("## Upload and Download :gear:")
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
