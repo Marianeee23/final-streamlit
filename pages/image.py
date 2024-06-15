@@ -41,8 +41,8 @@ class Img2Vec:
         try:
             # Load ResNet18 model from torchvision with pretrained=False to prevent download
             self.model = resnet18(pretrained=False)
-            # Load state_dict from a local file (adjust the path accordingly)
-            self.model.load_state_dict(torch.load('path/to/your/local/resnet18.pth'))
+            # Load state_dict from a local file
+            self.model.load_state_dict(torch.load('resnet18.pth'))  # Adjust path if necessary
             # Set to evaluation mode
             self.model.eval()
             self.extraction_layer = -1  # Example extraction layer, adjust as needed
@@ -67,7 +67,7 @@ class Img2Vec:
 # Streamlit Web App Interface
 st.write("##  👟Shoes Brand Classification Model 👟")
 st.write("Upload an image of shoes, and we'll predict its brand based on our trained model!")
-st.write("Prediction is limited to the brand of  Adidas and Nike")
+st.write("Prediction is limited to the brand of Adidas and Nike")
 st.sidebar.write("## Upload and Download :gear:")
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
