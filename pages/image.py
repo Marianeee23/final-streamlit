@@ -9,6 +9,7 @@ from sklearn.exceptions import NotFittedError
 from sklearn.utils.validation import check_is_fitted
 import torch
 from torchvision.models import resnet18
+import os
 
 st.set_page_config(layout="wide", page_title="Image Classification for Shoes Brand")
 
@@ -35,22 +36,25 @@ def is_model_fitted(model):
 # Load the model
 model = load_model()
 
-# Initialize Img2Vec with local model loading
+# Initialize Img2Vec
 class Img2Vec:
     def __init__(self):
         try:
-            # Load ResNet18 model from torchvision with pretrained=False to prevent download
-            self.model = resnet18(pretrained=False)
-            # Load state_dict from a local file
-            self.model.load_state_dict(torch.load('resnet18.pth'))  # Adjust path if necessary
-            # Set to evaluation mode
-            self.model.eval()
-            self.extraction_layer = -1  # Example extraction layer, adjust as needed
+            # Check if resnet18.pth exists, then load it
+            if os.path.exists('resnet18.pth'):
+                self.model = resnet18(pretrained=False)
+                self.model.load_state_dict(torch.load('resnet18.pth'))
+                self.model.eval()
+                self.extraction_layer = -1  # Example extraction layer, adjust as needed
+            else:
+                self.model = None  # Placeholder or default behavior when file is missing
+                st.warning("resnet18.pth not found. Using default behavior for Img2Vec.")
         except Exception as e:
             st.error(f"Error initializing Img2Vec: {e}")
 
     def get_vec(self, image):
-        # Function to get image features (you may need to adjust this based on img2vec-pytorch usage)
+        if self.model is None:
+            return None  # Handle gracefully if model is not initialized
         try:
             # Process image and get features
             # Example code, adjust based on img2vec-pytorch usage
