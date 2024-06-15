@@ -4,7 +4,8 @@ import streamlit as st
 st.header('Image Classification Source Code')
 st.subheader('This python code is implemented for Streamlit')
 st.code(''' 
-        import joblib
+        
+import joblib
 import streamlit as st
 import pandas as pd
 from nltk.corpus import names
@@ -14,13 +15,13 @@ from img2vec_pytorch import Img2Vec
 from sklearn.exceptions import NotFittedError
 from sklearn.utils.validation import check_is_fitted
 
-# Set Streamlit page configuration
-st.set_page_config(layout="wide", page_title="Image Classification for Shoes")
+
+st.set_page_config(layout="wide", page_title="Image Classification for Shoes Brand")
 
 # Function to load the model
 def load_model():
     try:
-        model = joblib.load('page/shoes.p')
+        model = joblib.load('shoes.p')
         return model
     except FileNotFoundError:
         st.error("Model file not found. Please upload the model file.")
@@ -44,10 +45,10 @@ model = load_model()
 img2vec = Img2Vec()
 
 # Streamlit Web App Interface
-st.write("👟 Image Classification for Shoes 👟")
-st.write("🩰 This is a demo of an Image Classification Model in Python!")
-st.write("🔮 We will attempt to forecast the content of the image based on the characteristics it was trained on using the uploaded image.")
-st.sidebar.write("## Upload and Download :👣:")
+st.write("##  👟Shoes Brand Classification Model 👟")
+st.write("Upload an image of shoes, and we'll predict its brand based on our trained model!")
+st.write("Prediction is limited to the brand of  Adidas and Nike")
+st.sidebar.write("## Upload and Download :gear:")
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
@@ -62,10 +63,10 @@ def convert_image(img):
 # Function to process and predict the uploaded image
 def fix_image(upload):
     image = Image.open(upload)
-    col1.write("### Image to be Predicted :🖼️:")
+    col1.write("### Image to be Predicted :camera:")
     col1.image(image, use_column_width=True)
 
-    col2.write("### Predicted Breed :👟:")
+    col2.write("### Brand Predicted: :wrench:")
     features = img2vec.get_vec(image)
     try:
         if model is not None and is_model_fitted(model):
@@ -92,7 +93,7 @@ if my_upload is not None:
 else:
     st.write("## Welcome!")
     st.write("Upload an image to get started.")
-    st.write("by Mariane Tumbagahan")
+    st.write("by Mariane Tumbagahan.")
 
 
     
