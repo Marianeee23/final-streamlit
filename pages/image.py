@@ -15,7 +15,7 @@ st.set_page_config(layout="wide", page_title="Image Classification for Shoes Bra
 # Function to load the model
 def load_model():
     try:
-        model = joblib.load('shoes.p')
+        model = joblib.load('page/shoes.p')
         return model
     except FileNotFoundError:
         st.error("Model file not found. Please upload the model file.")
