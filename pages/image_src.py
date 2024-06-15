@@ -7,16 +7,14 @@ st.code('''
         
 import joblib
 import streamlit as st
-import pandas as pd
-from nltk.corpus import names
 from PIL import Image
 from io import BytesIO
-from img2vec_pytorch import Img2Vec
+from torchvision import transforms
+from torchvision.models import resnet18
+import torch
+import os
 from sklearn.exceptions import NotFittedError
 from sklearn.utils.validation import check_is_fitted
-import torch
-from torchvision.models import resnet18
-import os
 
 st.set_page_config(layout="wide", page_title="Image Classification for Shoes Brand")
 
@@ -64,7 +62,6 @@ class Img2Vec:
             return None  # Handle gracefully if model is not initialized
         try:
             # Process image and get features
-            # Example code, adjust based on img2vec-pytorch usage
             img = Image.open(image).convert('RGB')
             img = img.resize((224, 224))  # Resize as per model requirement
             tensor = transforms.ToTensor()(img)
@@ -128,6 +125,7 @@ else:
     st.write("## Welcome!")
     st.write("Upload an image to get started.")
     st.write("by Mariane Tumbagahan.")
+
 
 
 
