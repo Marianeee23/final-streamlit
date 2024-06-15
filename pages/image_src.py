@@ -100,11 +100,11 @@ def fix_image(upload):
     col2.write("### Brand Predicted: :wrench:")
     features = img2vec.get_vec(image)
     try:
-        if model is not None and is_model_fitted(model):
-            pred = model.predict([features])
+        if features is not None and model is not None and is_model_fitted(model):
+            pred = model.predict([features.reshape(1, -1)])  # Reshape features to 2D array
             col2.header(pred[0])
         else:
-            st.error("The model is not fitted. Please fit the model before using it for predictions.")
+            st.error("The model is not fitted or features extraction failed.")
     except Exception as e:
         st.error(f"Error during prediction: {e}")
 
