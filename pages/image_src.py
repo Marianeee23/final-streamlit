@@ -14,7 +14,8 @@ from io import BytesIO
 from img2vec_pytorch import Img2Vec
 from sklearn.exceptions import NotFittedError
 from sklearn.utils.validation import check_is_fitted
-
+import torch
+from torchvision.models import resnet18
 
 st.set_page_config(layout="wide", page_title="Image Classification for Shoes Brand")
 
@@ -41,8 +42,34 @@ def is_model_fitted(model):
 # Load the model
 model = load_model()
 
-# Initialize Img2Vec
-img2vec = Img2Vec()
+# Initialize Img2Vec with local model loading
+class Img2Vec:
+    def __init__(self):
+        try:
+            # Load ResNet18 model from torchvision with pretrained=False to prevent download
+            self.model = resnet18(pretrained=False)
+            # Load state_dict from a local file (adjust the path accordingly)
+            self.model.load_state_dict(torch.load('path/to/your/local/resnet18.pth'))
+            # Set to evaluation mode
+            self.model.eval()
+            self.extraction_layer = -1  # Example extraction layer, adjust as needed
+        except Exception as e:
+            st.error(f"Error initializing Img2Vec: {e}")
+
+    def get_vec(self, image):
+        # Function to get image features (you may need to adjust this based on img2vec-pytorch usage)
+        try:
+            # Process image and get features
+            # Example code, adjust based on img2vec-pytorch usage
+            img = Image.open(image).convert('RGB')
+            img = img.resize((224, 224))  # Resize as per model requirement
+            tensor = transforms.ToTensor()(img)
+            with torch.no_grad():
+                feature = self.model(tensor.unsqueeze(0))
+            return feature.squeeze().numpy()  # Example return, adjust as needed
+        except Exception as e:
+            st.error(f"Error getting image features: {e}")
+            return None
 
 # Streamlit Web App Interface
 st.write("##  👟Shoes Brand Classification Model 👟")
@@ -76,6 +103,9 @@ def fix_image(upload):
             st.error("The model is not fitted. Please fit the model before using it for predictions.")
     except Exception as e:
         st.error(f"Error during prediction: {e}")
+
+# Initialize Img2Vec
+img2vec = Img2Vec()
 
 # Streamlit columns for displaying the image and prediction
 col1, col2 = st.columns(2)
