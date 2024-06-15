@@ -93,31 +93,4 @@ def fix_image(upload):
     col2.write("### Brand Predicted: :wrench:")
     features = img2vec.get_vec(image)
     try:
-        if features is not None and model is not None and is_model_fitted(model):
-            pred = model.predict([features.reshape(1, -1)])  # Reshape features to 2D array
-            col2.header(pred[0])
-        else:
-            st.error("The model is not fitted or features extraction failed.")
-    except Exception as e:
-        st.error(f"Error during prediction: {e}")
-
-# Initialize Img2Vec
-img2vec = Img2Vec()
-
-# Streamlit columns for displaying the image and prediction
-col1, col2 = st.columns(2)
-
-# File uploader in the sidebar
-my_upload = st.sidebar.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-
-# Handling the uploaded file
-if my_upload is not None:
-    if my_upload.size > MAX_FILE_SIZE:
-        st.error("The uploaded file is too large. Please upload an image smaller than 5MB.")
-    else:
-        if model is not None:
-            fix_image(upload=my_upload)
-else:
-    st.write("## Welcome!")
-    st.write("Upload an image to get started.")
-    st.write("by Mariane Tumbagahan.")
+        if features is not None and model is not No
